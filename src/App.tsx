@@ -1,9 +1,8 @@
 // import React from "react";
-import { heroDescription, heroTitle } from "./constants";
-import { DashBoardScreen } from "./presentation/screens/dashboard/DashboardScreen";
+import { DashBoardPage } from "./presentation/screens/dashboard/DashboardPage";
 
 const App = () => {
-  return <DashBoardScreen />;
+  return <DashBoardPage />;
 };
 
 export default App;
