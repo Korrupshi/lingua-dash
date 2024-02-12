@@ -4,17 +4,13 @@ import { useSideBarStore } from "../../application/stores/sideBarStore";
 interface SideBarItemProps {
   id: number;
   title: string;
-  // selectedId: number;
   icon: ReactNode;
-  // onClick: (id: number) => void;
 }
 
 export const SideBarItem: React.FC<SideBarItemProps> = ({
   id,
   title,
-  // selectedId,
   icon,
-  // onClick,
 }) => {
   const selectedId = useSideBarStore((state) => state.selectedId);
   const onSelected = useSideBarStore((state) => state.onSelected);

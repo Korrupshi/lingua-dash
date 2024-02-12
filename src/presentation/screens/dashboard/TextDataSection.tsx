@@ -7,7 +7,7 @@ import React from "react";
 
 export const TextDataSection = () => {
   return (
-    <div className="p-4 w-fit">
+    <div className=" w-fit">
       <h2 className="text-2xl mb-4 font-semibold">Study Time</h2>
       <div className="flex flex-row gap-4">
         <TextMetrics title="Today" value="1.6h" />

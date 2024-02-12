@@ -1,16 +1,11 @@
 import {
   ArrowUpTrayIcon,
   ChartBarIcon,
-  Cog6ToothIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { SideBarItem } from "../components/SideBarItem";
-// import { useSideBarStore } from "../../application/stores/sideBarStore";
 
 export const SideBar = () => {
-  // const selectedId = useSideBarStore((state) => state.selectedId);
-  // const onSelected = useSideBarStore((state) => state.onSelected);
-
   return (
     <div className="w-56 h-screen bg-surface p-4 border-e border-gray-700">
       <img
