@@ -1,23 +1,20 @@
-import React, { PureComponent } from "react";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
+import React from "react";
+import {
+  PieChart,
+  Pie,
+  Legend,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
+import { SmallGraphContainer } from "./SmallGraphContainer";
 
 interface StudyMethod {
   name: string;
   value: number;
 }
 
-export const PieSection = () => {
-  return (
-    <div className="p-4 h-fit  max-w-[400px] bg-surface rounded-xl">
-      <h2 className="text-2xl mb-4 font-semibold">Breakdown</h2>
-      <div className="flex flex-row gap-4">
-        <PieGraph />
-      </div>
-    </div>
-  );
-};
-
-const data01: StudyMethod[] = [
+const data: StudyMethod[] = [
   { name: "Read", value: 400 },
   { name: "Listen", value: 300 },
   { name: "Speak", value: 300 },
@@ -25,21 +22,57 @@ const data01: StudyMethod[] = [
   { name: "Other", value: 278 },
 ];
 
-const PieGraph = () => {
+export const PieSection = () => {
   return (
-    <ResponsiveContainer width={400} height={300}>
+    <SmallGraphContainer title="Breakdown" content={<PieGraph data={data} />} />
+  );
+};
+
+const PieGraph: React.FC<{ data: StudyMethod[] }> = ({ data }) => {
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
+
+  if (data.length === 0 || data == null) {
+    return NoDataPieGraph();
+  } else
+    return (
+      <ResponsiveContainer className="flex h-full w-full">
+        <PieChart>
+          <Pie
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            isAnimationActive={false}
+            data={data}
+            outerRadius={100}
+            stroke="#FFFFFF"
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend layout="vertical" verticalAlign="top" align="right" />
+        </PieChart>
+      </ResponsiveContainer>
+    );
+};
+
+const NoDataPieGraph = () => {
+  return (
+    <ResponsiveContainer className="flex flex-col h-full w-full">
       <PieChart>
         <Pie
           dataKey="value"
+          nameKey="name"
           isAnimationActive={false}
-          data={data01}
-          innerRadius={50}
-          outerRadius={80}
-          fill="#8884d8"
-          label
+          data={[{ value: 100, name: "NA" }]}
+          outerRadius={100}
+          fill="none"
+          stroke="#FFFFFF"
+          opacity={1}
         />
-        <Tooltip />
-        <Legend />
+        <Legend layout="vertical" verticalAlign="top" align="right" />
       </PieChart>
     </ResponsiveContainer>
   );

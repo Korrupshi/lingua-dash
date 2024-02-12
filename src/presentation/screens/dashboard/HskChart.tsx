@@ -7,6 +7,7 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
+import { SmallGraphContainer } from "./SmallGraphContainer";
 
 interface HskData {
   hsk: string;
@@ -41,30 +42,56 @@ const data: HskData[] = [
 
 export const HskSection = () => {
   return (
-    <div className="p-4 h-fit  max-w-[400px] bg-surface rounded-xl">
-      <h2 className="text-2xl mb-4 font-semibold">HSK Progress</h2>
-      <div className="flex flex-row gap-4">
-        <HskRadar />
-      </div>
-    </div>
+    <SmallGraphContainer
+      title="HSK Progress"
+      content={<HskRadar data={data} />}
+    />
   );
 };
 
-export const HskRadar = () => {
+export const HskRadar: React.FC<{ data: HskData[] }> = ({ data }) => {
+  const hskData = data.length === 0 || data == null ? defaultData : data;
   return (
-    <ResponsiveContainer width={400} height={300}>
-      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+    <ResponsiveContainer className="flex h-full w-full ">
+      <RadarChart data={hskData}>
         <PolarGrid />
-        <PolarAngleAxis dataKey="hsk" />
-        <PolarRadiusAxis />
+        <PolarAngleAxis dataKey="hsk" color="#fff" fill="#fff" />
+        {/* <PolarRadiusAxis /> */}
         <Radar
-          name="Mike"
+          name="Demo"
           dataKey="percent"
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.6}
+          stroke="#14CB42"
+          fill="#14CB42"
+          fillOpacity={0.5}
         />
       </RadarChart>
     </ResponsiveContainer>
   );
 };
+
+const defaultData: HskData[] = [
+  {
+    hsk: "HSK1",
+    percent: 0,
+  },
+  {
+    hsk: "HSK2",
+    percent: 0,
+  },
+  {
+    hsk: "HSK3",
+    percent: 0,
+  },
+  {
+    hsk: "HSK4",
+    percent: 0,
+  },
+  {
+    hsk: "HSK5",
+    percent: 0,
+  },
+  {
+    hsk: "HSK6",
+    percent: 0,
+  },
+];
