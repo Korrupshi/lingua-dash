@@ -1,15 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
-// import { Provider } from "react-redux";
-// import store from "./application/storeRedux.ts";
+import ErrorPage from "./presentation/screens/ErrorPage.tsx";
+import { DataSheetPage } from "./presentation/screens/datasheet/DataSheetPage.tsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/input",
+    element: <DataSheetPage />,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  // <Provider store={store}>
-  <App />
-  // </Provider>
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );

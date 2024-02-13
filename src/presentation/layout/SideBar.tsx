@@ -1,13 +1,34 @@
-import {
-  ArrowUpTrayIcon,
-  ChartBarIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { HomeOutlined, InputOutlined } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SideBarItem } from "../components/SideBarItem";
 
 export const SideBar = () => {
+  let navigate = useNavigate();
+
+  const onNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  let location = useLocation();
+  const path = location.pathname;
+
+  const [selectedId, setSelectedId] = useState(0);
+
+  useEffect(() => {
+    let id: number;
+    if (path === "/") {
+      id = 0;
+    } else if (path === "/input") {
+      id = 1;
+    } else {
+      id = 0; // Or any other default value
+    }
+    setSelectedId(id);
+  }, [path]);
+
   return (
-    <div className="w-56 h-screen bg-surface p-4 border-e border-gray-700">
+    <aside className="fixed top-0 left-0 z-40 w-64 h-screen hidden md:inline-flex md:flex-col bg-black p-4 ">
       <img
         src="./src/assets/pingmu-banner.svg"
         alt="logo"
@@ -16,20 +37,24 @@ export const SideBar = () => {
       <ul>
         <SideBarItem
           id={0}
+          selected={selectedId == 0}
           title="Dashboard"
-          icon={<ChartBarIcon className="w-6 h-6 text-textPrimary" />}
+          icon={<HomeOutlined className="w-6 h-6 text-textPrimary" />}
+          onClick={() => onNavigate("/")}
         />
         <SideBarItem
           id={1}
-          title="Profile"
-          icon={<UserCircleIcon className="w-6 h-6 text-textPrimary" />}
-        />
-        <SideBarItem
-          id={2}
+          selected={selectedId == 1}
           title="Input data"
-          icon={<ArrowUpTrayIcon className="w-6 h-6 text-textPrimary" />}
+          icon={<InputOutlined className="w-6 h-6 text-textPrimary" />}
+          onClick={() => onNavigate("/input")}
         />
+        {/* <SideBarItem
+          id={2}
+          title="Profile"
+          icon={<PersonOutline className="w-6 h-6 text-textPrimary" />}
+        /> */}
       </ul>
-    </div>
+    </aside>
   );
 };
