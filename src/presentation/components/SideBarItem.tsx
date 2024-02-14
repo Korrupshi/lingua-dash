@@ -17,13 +17,13 @@ export const SideBarItem: React.FC<SideBarItemProps> = ({
 }) => {
   return (
     <li
-      className={`flex items-center gap-2 px-2 mb-4 py-2 rounded-lg cursor-pointer ${
+      className={`flex w-5/6 m-auto items-center gap-2 px-3 mb-4 py-2 rounded-lg cursor-pointer ${
         selected ? "bg-blue-700 hover:bg-blue-500" : "hover:bg-gray-700"
       }`}
       onClick={onClick}
     >
       {icon}
-      <p className="text-md select-none">{title}</p>
+      <p className="hidden md:block text-md select-none">{title}</p>
     </li>
   );
 };

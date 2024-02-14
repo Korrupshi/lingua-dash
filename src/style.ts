@@ -18,13 +18,17 @@ const styles = {
 };
 
 export const layout = {
-  section: `flex md:flex-row flex-col ${styles.paddingY}`,
-  sectionReverse: `flex md:flex-row flex-col-reverse ${styles.paddingY}`,
+  sideBarItem: `w-6 h-6 text-textPrimary m-auto md:m-0`,
+};
 
-  sectionImgReverse: `flex-1 flex ${styles.flexCenter} md:mr-10 mr-0 md:mt-0 mt-10 relative`,
-  sectionImg: `flex-1 flex ${styles.flexCenter} md:ml-10 ml-0 md:mt-0 mt-10 relative`,
-
-  sectionInfo: `flex-1 ${styles.flexStart} flex-col`,
+export const colors = {
+  primary: "#14cb42",
+  secondary: "#f3ea78",
+  background: "#0f141a",
+  surface: "#1e2736",
+  textPrimary: "#efeff1",
+  textSecondary: "#c8c8c8",
+  textTertiary: "#98979d",
 };
 
 export default styles;

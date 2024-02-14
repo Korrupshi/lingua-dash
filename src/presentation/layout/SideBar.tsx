@@ -1,6 +1,7 @@
 import { HomeOutlined, InputOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { layout } from "../../style";
 import { SideBarItem } from "../components/SideBarItem";
 
 export const SideBar = () => {
@@ -28,32 +29,32 @@ export const SideBar = () => {
   }, [path]);
 
   return (
-    <aside className="fixed top-0 left-0 z-40 w-64 h-screen hidden md:inline-flex md:flex-col bg-black p-4 ">
+    <aside className="fixed top-0 left-0 z-40 w-24 md:w-64 h-screen  md:inline-flex md:flex-col bg-black p-4 ">
       <img
         src="./src/assets/pingmu-banner.svg"
         alt="logo"
-        className="mb-8 h-10"
+        className="hidden md:flex mb-8 h-10 w-fit"
+      />
+      <img
+        src="./src/assets/pingmu-logo.svg"
+        alt="logo"
+        className="md:hidden mb-8 h-10 mx-auto"
       />
       <ul>
         <SideBarItem
           id={0}
           selected={selectedId == 0}
           title="Dashboard"
-          icon={<HomeOutlined className="w-6 h-6 text-textPrimary" />}
+          icon={<HomeOutlined className={`${layout.sideBarItem}`} />}
           onClick={() => onNavigate("/")}
         />
         <SideBarItem
           id={1}
           selected={selectedId == 1}
           title="Input data"
-          icon={<InputOutlined className="w-6 h-6 text-textPrimary" />}
+          icon={<InputOutlined className={`${layout.sideBarItem}`} />}
           onClick={() => onNavigate("/input")}
         />
-        {/* <SideBarItem
-          id={2}
-          title="Profile"
-          icon={<PersonOutline className="w-6 h-6 text-textPrimary" />}
-        /> */}
       </ul>
     </aside>
   );

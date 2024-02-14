@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  PieChart,
-  Pie,
-  Legend,
-  Tooltip,
-  ResponsiveContainer,
   Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
 } from "recharts";
+import { colors } from "../../../style";
 import { SmallGraphContainer } from "./SmallGraphContainer";
-
 interface StudyMethod {
   name: string;
   value: number;
@@ -45,7 +45,7 @@ const PieGraph: React.FC<{ data: StudyMethod[] }> = ({ data }) => {
             isAnimationActive={false}
             data={data}
             outerRadius={100}
-            stroke="#FFFFFF"
+            stroke={`${colors.surface}`}
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
@@ -69,7 +69,7 @@ const NoDataPieGraph = () => {
           data={[{ value: 100, name: "NA" }]}
           outerRadius={100}
           fill="none"
-          stroke="#FFFFFF"
+          stroke={`${colors.surface}`}
           opacity={1}
         />
         <Legend layout="vertical" verticalAlign="top" align="right" />

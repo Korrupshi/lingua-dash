@@ -1,67 +1,72 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
+import { repositoryProvider } from "../../../di/RepositoryProvider";
 import { StudyData } from "../../../domain/models/StudyData";
 import { LargeGraphContainer } from "./LargeGraphContainer";
 
 export const WeeklystudyGraph = () => {
-  return <LargeGraphContainer title="2024" content={<BarGraph />} />;
+  var studyRepository = repositoryProvider.studyRepository;
+
+  const [data, setData] = useState<StudyData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const studyData = await studyRepository.getAll();
+      setData(studyData);
+    };
+
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
+
+  return (
+    <LargeGraphContainer title="2024" content={<BarGraph data={data} />} />
+  );
 };
 
-function BarGraph() {
+const BarGraph: React.FC<{ data: StudyData[] }> = ({ data }) => {
+  const studyDataToWeeklyData = (data: StudyData[]): WeeklyStudy[] => {
+    const uiData: WeeklyStudy[] = data.map((it: StudyData) => {
+      return { date: it.date.substring(5), studyMin: it.readMin };
+    });
+    return uiData;
+  };
+
   return (
     <div className="flex flex-col text-center w-full h-full">
       <div className="flex items-center">
-        <p className="-rotate-90">Hours</p>
-        {/* <ResponsiveContainer className="flex h-full w-full "> */}
-        <ResponsiveContainer width={600} height={300}>
-          <BarChart data={data}>
+        <p className="-rotate-90">Min</p>
+        <ResponsiveContainer
+          className="flex h-full w-full "
+          width={600}
+          height={300}
+        >
+          <BarChart data={studyDataToWeeklyData(data)}>
             <XAxis dataKey="date" stroke="#FFF" color="#fff" />
-            <YAxis dataKey="readMin" stroke="#FFF" />
+            <YAxis dataKey="studyMin" stroke="#FFF" />
             <Tooltip />
-            <Bar
-              dataKey="readMin"
-              fill="#14CB42"
-              width={10}
-              maxBarSize={60}
-            ></Bar>
+            <Bar dataKey="studyMin" fill="#14CB42" width={10} maxBarSize={60}>
+              {/* {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} name={entry.date.substring(5)} />
+              ))} */}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <p>Week</p>
+      <p>Date</p>
     </div>
   );
-}
+};
 
-const data: StudyData[] = [
-  {
-    date: "1",
-    readMin: 56,
-  },
-  {
-    date: "2",
-    readMin: 122,
-  },
-  {
-    date: "3",
-    readMin: 34,
-  },
-  {
-    date: "4",
-    readMin: 233,
-  },
-  {
-    date: "5",
-    readMin: 200,
-  },
-  {
-    date: "6",
-    readMin: 10,
-  },
-];
+interface WeeklyStudy {
+  date: string;
+  studyMin: number;
+}
